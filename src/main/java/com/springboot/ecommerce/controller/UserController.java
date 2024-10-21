@@ -22,7 +22,7 @@ public class UserController {
         return ResponseEntity.ok(service.findById(id));
     }
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<User>>findByName(@PathVariable String name){
+    public ResponseEntity<User>findByName(@PathVariable String name){
         return ResponseEntity.ok(service.findByName(name));
     }
 

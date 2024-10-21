@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface UserService {
     User findById(Long id);
-    List<User> findByName(String name);
+    User findByName(String name);
     User findByEmail(String email);
     List<User> findAll();
     User insert(User user);

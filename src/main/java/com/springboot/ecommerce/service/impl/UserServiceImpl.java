@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByName(String name) {
+    public User findByName(String name) {
         return userRepo.findByName(name);
     }
 
