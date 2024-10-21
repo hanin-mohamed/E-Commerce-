@@ -34,7 +34,10 @@ public class ProductController {
     public ResponseEntity<List<Product>> findAllByCategoryId(@PathVariable Long categoryId){
         return ResponseEntity.ok(service.findAllByCategoryId(categoryId));
     }
-
+    @GetMapping("/user/{userName}")
+    public ResponseEntity<List<Product>> findAllByUserName(@PathVariable String userName){
+        return ResponseEntity.ok(service.findAllByUserName(userName));
+    }
     @PostMapping()
     public  ResponseEntity<Product>insert(@RequestBody Product product){
 

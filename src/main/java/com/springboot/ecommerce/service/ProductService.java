@@ -13,6 +13,8 @@ public interface ProductService {
     Product findByName(String name);
     List<Product> findAll();
     List<Product>findAllByCategoryId(Long categoryId);
+    List<Product>findAllByUserName(String userName);
+
     Product insert(Product product);
 
     Product update(Product product);

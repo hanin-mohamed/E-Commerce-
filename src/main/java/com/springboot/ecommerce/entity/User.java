@@ -1,11 +1,14 @@
 package com.springboot.ecommerce.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -28,5 +31,14 @@ public class User {
 
     @Column(name = "password")
     private String password;
+    
+    // add relation entities
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "user",
+    cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Product> products;
+    
 
 }

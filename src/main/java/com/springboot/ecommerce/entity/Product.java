@@ -33,9 +33,14 @@ public class Product {
     private String imageUrl;
 
     // add relation entities
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
