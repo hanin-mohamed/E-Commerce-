@@ -30,6 +30,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findAllByCategoryId(Long categoryId) {
+        return productRepository.findProductsByCategoryId(categoryId);
+    }
+
+    @Override
     public Product insert(Product product) {
         return  productRepository.save(product);
     }

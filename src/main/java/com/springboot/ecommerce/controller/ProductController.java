@@ -29,6 +29,12 @@ public class ProductController {
     public ResponseEntity<List<Product>> findAll(){
         return ResponseEntity.ok(service.findAll());
     }
+
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<List<Product>> findAllByCategoryId(@PathVariable Long categoryId){
+        return ResponseEntity.ok(service.findAllByCategoryId(categoryId));
+    }
+
     @PostMapping()
     public  ResponseEntity<Product>insert(@RequestBody Product product){
 

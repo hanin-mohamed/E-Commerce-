@@ -1,5 +1,6 @@
 package com.springboot.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,12 +23,6 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "category")
-    private String category;
-
-    @Column(name = "brand")
-    private String brand;
-
     @Column(name = "stock")
     private Long stock;
 
@@ -38,5 +33,9 @@ public class Product {
     private String imageUrl;
 
     // add relation entities
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }

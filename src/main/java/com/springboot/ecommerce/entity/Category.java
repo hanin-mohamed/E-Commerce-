@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "category")
 @Setter
@@ -23,5 +26,12 @@ public class Category {
 
     @Column(name = "details")
     private String details;
+
+    // add relation entities
+
+    @OneToMany(mappedBy = "category",
+            cascade = CascadeType.ALL
+    )
+    List<Product> products;
 
 }
