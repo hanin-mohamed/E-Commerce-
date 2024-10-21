@@ -37,5 +37,6 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
+    // add relation entities
 
 }
