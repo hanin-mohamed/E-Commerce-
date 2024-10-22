@@ -1,19 +1,39 @@
 package com.springboot.ecommerce.service;
 
-
 import com.springboot.ecommerce.entity.Category;
+import com.springboot.ecommerce.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
-public interface CategoryService {
+@RequiredArgsConstructor
+public class CategoryService  {
+    private final CategoryRepository repository;
 
-    Category findById(Long id);
-    Category findByName(String name);
-    List<Category> findAll();
-    Category insert(Category category);
-    Category update(Category category);
-    void delete(Long id);
+    public Category findById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 
+    public Category findByName(String name) {
+        return repository.findByName(name);
+    }
+
+    public List<Category> findAll() {
+        return repository.findAll();
+    }
+
+    public Category insert(Category category) {
+        return repository.save(category);
+    }
+
+    public Category update(Category category) {
+        return repository.save(category);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }
