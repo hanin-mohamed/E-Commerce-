@@ -1,6 +1,7 @@
 package com.springboot.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,11 +43,12 @@ public class Product {
     private Category category;
 
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "product",
-    cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL)
     private List<Review> reviews;
 }

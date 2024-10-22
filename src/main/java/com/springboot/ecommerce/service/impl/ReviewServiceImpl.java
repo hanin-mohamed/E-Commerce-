@@ -26,18 +26,23 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> findAllByProductId(Long productId) {
-        Product product=  productRepo.findById(productId).orElse(null);
-        return reviewRepo.findAllByProductId(product.getId());
+        return reviewRepo.findAllByProduct_Id(productId);
     }
 
     @Override
     public List<Review> findAllByUserName(String userName) {
-        User user = userRepo.findByName(userName);
-        return reviewRepo.findAllByUserName(user.getName());
+        return reviewRepo.findAllByUser_Name(userName);
     }
 
     @Override
     public Review insert(Review review) {
+        Product product = productRepo.findById(review.getProduct().getId())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        User user = userRepo.findById(review.getUser().getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        review.setProduct(product);
+        review.setUser(user);
         return reviewRepo.save(review);
     }
 

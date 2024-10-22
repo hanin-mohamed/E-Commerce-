@@ -2,6 +2,7 @@ package com.springboot.ecommerce.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,19 +32,18 @@ public class User {
 
     @Column(name = "password")
     private String password;
-    
+
     // add relation entities
 
-    @JsonBackReference
     @OneToMany(mappedBy = "user",
-    cascade = {CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Product> products;
 
     @OneToMany(mappedBy = "user",
-    cascade = {CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Review> reviews;
-    
+
 
 }
