@@ -8,9 +8,11 @@ import com.springboot.ecommerce.repository.ProductRepository;
 import com.springboot.ecommerce.repository.ReviewRepository;
 import com.springboot.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,33 +20,64 @@ public class ReviewService {
     private final ReviewRepository reviewRepo;
     private final UserRepository userRepo;
     private final ProductRepository productRepo;
-    public Review findById(Long id) {
-        return reviewRepo.findById(id).orElse(null);
+
+    public ResponseEntity<?>  findById(Long id) {
+        Optional<Review> review= reviewRepo.findById(id);
+        if (review.isEmpty())
+            return ResponseEntity.badRequest().body("This review doesn't exist!");
+        return ResponseEntity.ok(review);
+
     }
 
-    public List<Review> findAllByProductId(Long productId) {
-        return reviewRepo.findAllByProduct_Id(productId);
+    public ResponseEntity<?> findAllByProductId(Long productId) {
+        Optional<Product> product = productRepo.findById(productId);
+        if (product.isEmpty())
+          return   ResponseEntity.badRequest().body("This product doesn't exist!");
+
+        List<Review> reviews = reviewRepo.findAllByProduct_Id(productId);
+        if (reviews.isEmpty())
+            return ResponseEntity.badRequest().body("This product hasn't been reviewed yet!");
+        return ResponseEntity.ok(reviews);
+
     }
 
-    public List<Review> findAllByUserName(String userName) {
-        return reviewRepo.findAllByUser_Name(userName);
+    public ResponseEntity<?> findAllByUserName(String userName) {
+        User users = userRepo.findByName(userName);
+        if (users == null) {
+            return ResponseEntity.badRequest().body("This user doesn't exist!");
+        }
+        List<Review> reviews = reviewRepo.findAllByUser_Name(userName);
+        if (reviews.isEmpty()) {
+            throw new RuntimeException("This user hasn't reviewed any product yet!");
+        }
+        return ResponseEntity.ok(reviews);
     }
 
-    public Review insert(Review review) {
-        Product product = productRepo.findById(review.getProduct().getId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        User user = userRepo.findById(review.getUser().getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public ResponseEntity<?>  insert(Review review) {
+        Optional<Product> product = productRepo.findById(review.getProduct().getId());
+        if (product.isEmpty())
+            return ResponseEntity.badRequest().body("This product doesn't exist!");
 
-        review.setProduct(product);
-        review.setUser(user);
-        return reviewRepo.save(review);
+        Optional<User> user = userRepo.findById(review.getUser().getId());
+        if (user.isEmpty())
+            return ResponseEntity.badRequest().body("This user doesn't exist!");
+        review.setProduct(product.get());
+        review.setUser(user.get());
+        return ResponseEntity.ok(reviewRepo.save(review));
     }
 
-    public Review update(Review review) {
-        return reviewRepo.save(review);    }
+    public ResponseEntity<?>  update(Review review) {
+        Optional<Review> temp = reviewRepo.findById(review.getId());
+        if (temp.isEmpty())
+            return ResponseEntity.badRequest().body("This review doesn't exist!");
+        return ResponseEntity.ok(reviewRepo.save(review));
+    }
 
-    public void delete(Long id) {
+    public ResponseEntity<?>  delete(Long id) {
+        Optional<Review> review = reviewRepo.findById(id);
+        if (review.isEmpty())
+            return ResponseEntity.badRequest().body("This review doesn't exist!");
         reviewRepo.deleteById(id);
+        return ResponseEntity.ok("Review deleted successfully!");
     }
 }
