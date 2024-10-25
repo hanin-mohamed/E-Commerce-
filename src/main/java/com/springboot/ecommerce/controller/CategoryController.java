@@ -3,6 +3,7 @@ package com.springboot.ecommerce.controller;
 
 import com.springboot.ecommerce.entity.Category;
 import com.springboot.ecommerce.service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class CategoryController {
     private final CategoryService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?>findById(@PathVariable Long id){
+    public ResponseEntity<?>findById( @PathVariable Long id){
         return ResponseEntity.ok(service.findById(id));
     }
     @GetMapping("/name/{name}")
@@ -31,7 +32,7 @@ public class CategoryController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> insert(@RequestBody Category category){
+    public ResponseEntity<?> insert(@Valid @RequestBody Category category){
         return ResponseEntity.ok(service.insert(category));
     }
 
@@ -41,7 +42,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete( @PathVariable Long id){
         service.delete(id);
     }
 }

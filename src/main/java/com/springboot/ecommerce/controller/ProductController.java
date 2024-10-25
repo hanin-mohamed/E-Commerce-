@@ -2,6 +2,7 @@ package com.springboot.ecommerce.controller;
 
 import com.springboot.ecommerce.entity.Product;
 import com.springboot.ecommerce.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +40,12 @@ public class ProductController {
         return ResponseEntity.ok(service.findAllByUserName(userName));
     }
     @PostMapping()
-    public  ResponseEntity<Product>insert(@RequestBody Product product){
+    public  ResponseEntity<Product>insert(@Valid @RequestBody Product product){
 
         return ResponseEntity.ok(service.insert(product));
     }
     @PutMapping()
-    public ResponseEntity<?>update(@RequestBody Product product){
+    public ResponseEntity<?>update(@Valid @RequestBody Product product){
         return ResponseEntity.ok(service.update(product));
     }
 

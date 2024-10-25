@@ -22,7 +22,7 @@ public class Category {
     private Long id;
 
     @Column(name = "name")
-    @NotNull
+    @NotNull(message = "is required")
     private String name;
 
     @Column(name = "details")

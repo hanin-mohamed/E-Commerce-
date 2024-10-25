@@ -1,11 +1,8 @@
 package com.springboot.ecommerce.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -28,7 +26,7 @@ public class User {
     private Long id;
 
     @Column(name = "name")
-    @NotNull
+    @NotNull(message = "is required")
     private String name;
 
     @Column(name = "email")
@@ -36,11 +34,14 @@ public class User {
     private String email;
 
     @Column(name = "password")
-    @NotNull
+    @NotNull(message = "is required")
     private String password;
 
-    // add relation entities
 
+    @Column(name = "role")
+    private String role;
+
+    // add relation entities
     @OneToMany(mappedBy = "user",
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
@@ -50,6 +51,8 @@ public class User {
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Review> reviews;
+
+
 
 
 }

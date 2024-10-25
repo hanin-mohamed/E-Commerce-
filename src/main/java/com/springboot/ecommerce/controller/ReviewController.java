@@ -1,19 +1,22 @@
 package com.springboot.ecommerce.controller;
 
-import com.springboot.ecommerce.entity.Product;
 import com.springboot.ecommerce.entity.Review;
-import com.springboot.ecommerce.repository.ReviewRepository;
-import com.springboot.ecommerce.service.ProductService;
 import com.springboot.ecommerce.service.ReviewService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.stream.Collectors;
+
+
 @RestController
 @RequestMapping("/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
+
     private final ReviewService service;
 
     @GetMapping("/{id}")
@@ -35,13 +38,15 @@ public class ReviewController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> insert(@RequestBody Review review) {
+    public ResponseEntity<?> insert(@Valid @RequestBody Review review, BindingResult result) {
+
         ResponseEntity<?> newReview = service.insert(review);
         return ResponseEntity.ok(newReview);
     }
 
     @PutMapping()
-    public ResponseEntity<?> update(@RequestBody Review review) {
+    public ResponseEntity<?> update(@Valid @RequestBody Review review, BindingResult result ) {
+
         ResponseEntity<?> updatedReview = service.update(review);
         return ResponseEntity.ok(updatedReview);
     }
@@ -49,6 +54,5 @@ public class ReviewController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         return service.delete(id);
-
     }
 }

@@ -5,11 +5,8 @@ package com.springboot.ecommerce.entity;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import jakarta.validation.constraints.Size;
+import lombok.*;
 @Entity
 @Table(name = "review")
 @Setter
@@ -24,15 +21,16 @@ public class Review {
     private Long id;
 
     @Column(name = "comment")
-    @NotNull
+    @Size(min = 10, message = "Review content must be at least 10 characters")
     private String comment;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @NotNull(message = "Product ID is required")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @NotNull(message = "User is required")
     private User user;
 
 }

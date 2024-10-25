@@ -1,9 +1,7 @@
 package com.springboot.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,22 +24,21 @@ public class Product {
     private Long id;
 
     @Column(name = "name")
-    @NotNull
+    @NotNull(message = "is required")
     private String name;
 
     @Column(name = "stock")
-    @NotNull
+    @NotNull(message = "is required")
     private Long stock;
 
     @Column(name = "price")
-    @NotNull
+    @NotNull(message = "is required")
     private double price;
 
     @Column(name = "image_url")
     private String imageUrl;
 
     // add relation entities
-
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id")
