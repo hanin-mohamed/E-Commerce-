@@ -11,7 +11,7 @@ import java.util.Date;
 public class JWTUtil {
 
     // Secret key
-    private final String secretKey = "shhIt'sASecret";
+    private final String secretKey = "shhItsASecret";
 
     // Generate JWT Token
     public String generateToken(String username) {
